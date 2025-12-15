@@ -1,0 +1,53 @@
+{
+  "name": "@teppan/vue",
+  "version": "0.0.1",
+  "description": "Vue 3 bindings for the Teppan code editor. Provides Vue components and composables for integrating the editor into Vue applications.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seijikohara/teppan.git",
+    "directory": "packages/vue"
+  },
+  "keywords": [
+    "teppan",
+    "code-editor",
+    "editor",
+    "vue",
+    "vue3",
+    "typescript"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "test": "bun test",
+    "typecheck": "vue-tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "@teppan/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.3.0",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.0"
+  }
+}

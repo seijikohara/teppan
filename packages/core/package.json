@@ -1,0 +1,41 @@
+{
+  "name": "@teppan/core",
+  "version": "0.0.1",
+  "description": "Framework-agnostic headless core for the Teppan code editor. Provides editor state management, text manipulation, and event handling.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seijikohara/teppan.git",
+    "directory": "packages/core"
+  },
+  "keywords": [
+    "teppan",
+    "code-editor",
+    "editor",
+    "headless",
+    "typescript"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
