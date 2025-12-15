@@ -1,0 +1,37 @@
+{
+  "name": "teppan",
+  "version": "0.0.1",
+  "description": "A headless code editor library with framework-agnostic core and official bindings for major UI frameworks.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seijikohara/teppan.git"
+  },
+  "keywords": [
+    "code-editor",
+    "editor",
+    "headless",
+    "typescript"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "bun run --filter '*' build",
+    "dev": "bun run --filter '*' dev",
+    "test": "bun run --filter '*' test",
+    "lint": "bun run --filter '*' lint",
+    "typecheck": "bun run --filter '*' typecheck",
+    "clean": "bun run --filter '*' clean"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "bun@1.1.38"
+}
