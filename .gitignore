@@ -5,18 +5,28 @@ node_modules/
 dist/
 *.tsbuildinfo
 
-# Bun
-bun.lock
+# Rust / Cargo
+target/
+Cargo.lock
+**/*.rs.bk
+
+# WASM
+packages/wasm-core/pkg/
+
+# Vite
+*.local
+.vite/
 
 # IDE
 .idea/
 *.swp
 *.swo
-.vscode/
+*.sublime-*
 
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # Environment
 .env
@@ -25,14 +35,22 @@ Thumbs.db
 
 # Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+logs/
 
-# Test coverage
+# Test
 coverage/
+.nyc_output/
 
-# Temporary files
+# Temporary
 *.tmp
 *.temp
 .cache/
+
+# Claude Code
+.claude/settings.local.json
+.claude/todos.json
+.claude/plans/
+
+# Playwright MCP
+.playwright-mcp/
+screenshots/

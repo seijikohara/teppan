@@ -1,0 +1,23 @@
+[package]
+name = "teppan-wasm-core"
+version = "0.1.0"
+edition = "2021"
+description = "WASM core for Teppan code editor - Piece Table, operations, and history management"
+license = "MIT"
+repository = "https://github.com/seijikohara/teppan"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde-wasm-bindgen = "0.6"
+js-sys = "0.3"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[profile.release]
+opt-level = "s"
+lto = true
