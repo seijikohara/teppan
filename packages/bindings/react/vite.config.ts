@@ -18,7 +18,13 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime", "@teppan/view", "@teppan/theme"],
+      external: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "@teppan/view",
+        "@teppan/theme",
+      ],
       output: {
         globals: {
           react: "React",

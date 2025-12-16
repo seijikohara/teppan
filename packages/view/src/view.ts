@@ -386,7 +386,9 @@ export class EditorView {
     const lineTo = lineFrom + text.length;
     const rangeDecorations = this.decorations
       .getForRange(lineFrom, lineTo)
-      .filter((d) => d.type === "range" && d.from !== undefined && d.to !== undefined)
+      .filter(
+        (d) => d.type === "range" && d.from !== undefined && d.to !== undefined,
+      )
       .sort((a, b) => (a.from ?? 0) - (b.from ?? 0));
 
     if (rangeDecorations.length === 0) {
@@ -409,12 +411,18 @@ export class EditorView {
 
       // Add text before decoration
       if (decFrom > currentPos) {
-        const beforeText = text.substring(currentPos - lineFrom, decFrom - lineFrom);
+        const beforeText = text.substring(
+          currentPos - lineFrom,
+          decFrom - lineFrom,
+        );
         element.appendChild(createTextNode(beforeText));
       }
 
       // Add decorated text
-      const decoratedText = text.substring(decFrom - lineFrom, decTo - lineFrom);
+      const decoratedText = text.substring(
+        decFrom - lineFrom,
+        decTo - lineFrom,
+      );
       if (decoratedText.length > 0) {
         const span = createElement("span", dec.class);
         span.appendChild(createTextNode(decoratedText));

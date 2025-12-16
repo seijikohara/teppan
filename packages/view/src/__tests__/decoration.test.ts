@@ -1,14 +1,14 @@
 import { describe, expect, test } from "bun:test";
+import type { Decoration, EditorState } from "@teppan/state";
 import {
-  DecorationSet,
   DecorationBuilder,
+  DecorationSet,
   builder,
+  collectDecorations,
   lineDecoration,
   rangeDecoration,
   widgetDecoration,
-  collectDecorations,
 } from "../decoration";
-import type { Decoration, EditorState } from "@teppan/state";
 
 describe("DecorationSet", () => {
   describe("empty", () => {

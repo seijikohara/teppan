@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import {
-  type Theme,
   CSS_VAR_PREFIX,
-  themeToCSSProperties,
+  type Theme,
   applyTheme,
   generateThemeCSS,
   mergeThemes,
+  themeToCSSProperties,
 } from "../theme";
 
 // Minimal test theme
@@ -185,9 +185,7 @@ describe("themeToCSSProperties", () => {
     const props = themeToCSSProperties(theme);
 
     // Should not have any token properties
-    const tokenProps = Object.keys(props).filter((k) =>
-      k.includes("-token-")
-    );
+    const tokenProps = Object.keys(props).filter((k) => k.includes("-token-"));
     expect(tokenProps).toHaveLength(0);
   });
 });

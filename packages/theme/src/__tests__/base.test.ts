@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { baseStyles, injectBaseStyles, removeBaseStyles } from "../base";
 
 // Mock document for testing

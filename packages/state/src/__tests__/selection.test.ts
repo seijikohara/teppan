@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { SelectionRange, SelectionSet } from "../selection";
 import { createPosition } from "../position";
+import { SelectionRange, SelectionSet } from "../selection";
 
 describe("SelectionRange", () => {
   describe("cursor", () => {
@@ -62,7 +62,7 @@ describe("SelectionRange", () => {
     test("returns false for non-empty selection", () => {
       const range = SelectionRange.range(
         createPosition(0, 0),
-        createPosition(0, 5)
+        createPosition(0, 5),
       );
       expect(range.isEmpty).toBe(false);
     });
@@ -86,7 +86,7 @@ describe("SelectionRange", () => {
     test("applies mapping function to anchor and head", () => {
       const range = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
 
       const mapped = range.map((pos) => ({
@@ -103,11 +103,11 @@ describe("SelectionRange", () => {
     test("returns true for equal ranges", () => {
       const a = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
       const b = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
       expect(a.equals(b)).toBe(true);
     });
@@ -115,11 +115,11 @@ describe("SelectionRange", () => {
     test("returns false for different anchors", () => {
       const a = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
       const b = SelectionRange.range(
         createPosition(1, 6),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
       expect(a.equals(b)).toBe(false);
     });
@@ -127,11 +127,11 @@ describe("SelectionRange", () => {
     test("returns false for different heads", () => {
       const a = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 10)
+        createPosition(1, 10),
       );
       const b = SelectionRange.range(
         createPosition(1, 5),
-        createPosition(1, 11)
+        createPosition(1, 11),
       );
       expect(a.equals(b)).toBe(false);
     });
@@ -152,7 +152,7 @@ describe("SelectionSet", () => {
 
     test("throws for empty ranges", () => {
       expect(() => new SelectionSet([])).toThrow(
-        "SelectionSet must have at least one range"
+        "SelectionSet must have at least one range",
       );
     });
 
@@ -221,7 +221,7 @@ describe("SelectionSet", () => {
           SelectionRange.cursor(createPosition(0, 0)),
           SelectionRange.cursor(createPosition(1, 0)),
         ],
-        1
+        1,
       );
 
       const mapped = set.map((pos) => ({
@@ -242,7 +242,7 @@ describe("SelectionSet", () => {
           SelectionRange.cursor(createPosition(0, 0)),
           SelectionRange.cursor(createPosition(1, 0)),
         ],
-        1
+        1,
       );
 
       const newMain = SelectionRange.cursor(createPosition(5, 5));
@@ -282,22 +282,20 @@ describe("SelectionSet", () => {
           SelectionRange.cursor(createPosition(0, 0)),
           SelectionRange.cursor(createPosition(1, 5)),
         ],
-        1
+        1,
       );
       const b = new SelectionSet(
         [
           SelectionRange.cursor(createPosition(0, 0)),
           SelectionRange.cursor(createPosition(1, 5)),
         ],
-        1
+        1,
       );
       expect(a.equals(b)).toBe(true);
     });
 
     test("returns false for different range counts", () => {
-      const a = new SelectionSet([
-        SelectionRange.cursor(createPosition(0, 0)),
-      ]);
+      const a = new SelectionSet([SelectionRange.cursor(createPosition(0, 0))]);
       const b = new SelectionSet([
         SelectionRange.cursor(createPosition(0, 0)),
         SelectionRange.cursor(createPosition(1, 0)),
@@ -316,12 +314,8 @@ describe("SelectionSet", () => {
     });
 
     test("returns false for different ranges", () => {
-      const a = new SelectionSet([
-        SelectionRange.cursor(createPosition(0, 0)),
-      ]);
-      const b = new SelectionSet([
-        SelectionRange.cursor(createPosition(0, 1)),
-      ]);
+      const a = new SelectionSet([SelectionRange.cursor(createPosition(0, 0))]);
+      const b = new SelectionSet([SelectionRange.cursor(createPosition(0, 1))]);
       expect(a.equals(b)).toBe(false);
     });
   });

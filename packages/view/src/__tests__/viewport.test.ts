@@ -1,6 +1,6 @@
-import { describe, expect, test, beforeEach } from "bun:test";
-import { ViewportManager, getVisibleLines, type Viewport } from "../viewport";
+import { beforeEach, describe, expect, test } from "bun:test";
 import type { EditorState } from "@teppan/state";
+import { type Viewport, ViewportManager, getVisibleLines } from "../viewport";
 
 describe("ViewportManager", () => {
   let viewport: ViewportManager;
