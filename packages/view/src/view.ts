@@ -16,9 +16,9 @@ import {
   measureCharSize,
   setStyles,
 } from "./dom";
-import { InputHandler, defaultKeymap, IS_MAC } from "./input";
-import { ViewportManager, getVisibleLines } from "./viewport";
+import { IS_MAC, InputHandler, defaultKeymap } from "./input";
 import { SearchPanel, type SearchPanelConfig } from "./search-panel";
+import { ViewportManager, getVisibleLines } from "./viewport";
 
 /**
  * Configuration for creating an EditorView
@@ -59,7 +59,9 @@ export class EditorView {
   /** Whether the editor is focused */
   private _hasFocus = false;
   /** Configuration */
-  private config: Required<Omit<EditorViewConfig, keyof EditorStateConfig | "search">> & {
+  private config: Required<
+    Omit<EditorViewConfig, keyof EditorStateConfig | "search">
+  > & {
     search: SearchPanelConfig | boolean;
   };
   /** Character size cache */

@@ -1,10 +1,6 @@
+import { type Extension, type StateField, createStateField } from "./extension";
 import type { EditorState } from "./state";
 import type { Transaction } from "./transaction";
-import {
-  createStateField,
-  type Extension,
-  type StateField,
-} from "./extension";
 
 /**
  * Search query configuration
@@ -107,9 +103,11 @@ export function findMatches(doc: string, query: SearchQuery): SearchMatch[] {
   }
 
   const matches: SearchMatch[] = [];
-  let match: RegExpExecArray | null;
 
-  while ((match = regex.exec(doc)) !== null) {
+  for (;;) {
+    const match = regex.exec(doc);
+    if (match === null) break;
+
     matches.push({
       from: match.index,
       to: match.index + match[0].length,
@@ -145,15 +143,15 @@ export function findNearestMatch(
     }
     // Wrap around to the first match
     return 0;
-  } else {
-    for (let i = matches.length - 1; i >= 0; i--) {
-      if (matches[i]!.to <= offset) {
-        return i;
-      }
-    }
-    // Wrap around to the last match
-    return matches.length - 1;
   }
+
+  for (let i = matches.length - 1; i >= 0; i--) {
+    if (matches[i]!.to <= offset) {
+      return i;
+    }
+  }
+  // Wrap around to the last match
+  return matches.length - 1;
 }
 
 /**

@@ -1,13 +1,13 @@
 import {
   type EditorState,
-  type SearchQuery,
   type SearchMatch,
-  type Transaction,
-  searchInDocument,
-  findNearestMatch,
-  replaceMatch,
-  replaceAllMatches,
+  type SearchQuery,
   SelectionSet,
+  type Transaction,
+  findNearestMatch,
+  replaceAllMatches,
+  replaceMatch,
+  searchInDocument,
 } from "@teppan/state";
 import { createElement } from "./dom";
 
@@ -372,11 +372,15 @@ export class SearchPanel {
     const navGroup = createElement("div", SearchCSS.row);
     navGroup.style.gap = "2px";
 
-    const prevBtn = this.createIconButton(Icons.prev, "Previous Match (Shift+Enter)", () =>
-      this.findPrevious(),
+    const prevBtn = this.createIconButton(
+      Icons.prev,
+      "Previous Match (Shift+Enter)",
+      () => this.findPrevious(),
     );
-    const nextBtn = this.createIconButton(Icons.next, "Next Match (Enter)", () =>
-      this.findNext(),
+    const nextBtn = this.createIconButton(
+      Icons.next,
+      "Next Match (Enter)",
+      () => this.findNext(),
     );
 
     this.infoElement = createElement("span", SearchCSS.info);

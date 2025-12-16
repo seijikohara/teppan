@@ -1,10 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import {
-  type SearchQuery,
   buildSearchRegex,
+  createSearchState,
   findMatches,
   findNearestMatch,
-  createSearchState,
 } from "../search";
 
 describe("search", () => {
