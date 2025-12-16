@@ -33,11 +33,6 @@
     }
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      "*.svelte",
-      "*.vue"
-    ]
+    "ignore": ["node_modules", "dist", "*.svelte", "*.vue"]
   }
 }

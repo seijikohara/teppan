@@ -1,0 +1,40 @@
+{
+  "name": "@teppan/wasm-core",
+  "version": "0.1.0",
+  "description": "WASM core for Teppan code editor. Provides Piece Table, text operations, and undo/redo history.",
+  "type": "module",
+  "main": "./pkg/teppan_wasm_core.js",
+  "module": "./pkg/teppan_wasm_core.js",
+  "types": "./pkg/teppan_wasm_core.d.ts",
+  "exports": {
+    ".": {
+      "types": "./pkg/teppan_wasm_core.d.ts",
+      "import": "./pkg/teppan_wasm_core.js"
+    },
+    "./wasm": {
+      "import": "./pkg/teppan_wasm_core_bg.wasm"
+    }
+  },
+  "files": ["pkg", "src", "Cargo.toml"],
+  "scripts": {
+    "build": "wasm-pack build --target web --out-dir pkg",
+    "build:bundler": "wasm-pack build --target bundler --out-dir pkg-bundler",
+    "build:node": "wasm-pack build --target nodejs --out-dir pkg-node",
+    "test": "cargo test",
+    "clean": "rm -rf pkg pkg-bundler pkg-node target"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seijikohara/teppan.git",
+    "directory": "packages/wasm-core"
+  },
+  "keywords": [
+    "teppan",
+    "wasm",
+    "webassembly",
+    "piece-table",
+    "text-editor",
+    "rust"
+  ]
+}

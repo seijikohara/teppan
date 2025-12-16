@@ -4,15 +4,26 @@ A headless code editor library with framework-agnostic core and official binding
 
 ## Overview
 
-Teppan provides a modular architecture that separates editor logic from rendering. The core package handles state management, text manipulation, and event handling, while framework-specific packages provide components and hooks for integration.
+Teppan provides a modular architecture that separates editor logic from rendering. The core packages handle state management, text manipulation, rendering, and theming, while framework-specific bindings provide components and hooks for integration.
 
 The headless design allows the core functionality to be used with any UI framework or without a framework at all.
 
 ## Packages
 
+### Core
+
 | Package | Description |
 |---------|-------------|
-| `@teppan/core` | Framework-agnostic headless core. Provides editor state management, text manipulation, and event handling. |
+| `@teppan/wasm-core` | WASM core built with Rust. Provides Piece Table data structure, text operations, and undo/redo history. |
+| `@teppan/state` | State management. Provides EditorState, Transaction, and Extension system. |
+| `@teppan/view` | DOM rendering and view management. Provides EditorView with virtualized rendering and event handling. |
+| `@teppan/theme` | Theme system. Provides theme interfaces and default light/dark themes. |
+| `@teppan/highlight` | Syntax highlighting. Provides tokenization and highlighting infrastructure. |
+
+### Framework Bindings
+
+| Package | Description |
+|---------|-------------|
 | `@teppan/react` | React bindings. Provides React components and hooks for integration. |
 | `@teppan/vue` | Vue 3 bindings. Provides Vue components and composables for integration. |
 | `@teppan/svelte` | Svelte 5 bindings. Provides Svelte components with runes support. |
@@ -21,6 +32,8 @@ The headless design allows the core functionality to be used with any UI framewo
 
 - [Bun](https://bun.sh/) >= 1.1.0
 - Node.js >= 20.0.0
+- [Rust](https://www.rust-lang.org/) (for building wasm-core)
+- [wasm-pack](https://rustwasm.github.io/wasm-pack/) (for building wasm-core)
 
 ## Installation
 
@@ -45,7 +58,7 @@ bun run typecheck
 bun run lint
 
 # Build specific package
-bun run --filter @teppan/core build
+bun run --filter @teppan/view build
 ```
 
 ## Usage
@@ -96,15 +109,17 @@ const code = ref('console.log("Hello");');
 ### Headless Core
 
 ```typescript
-import { Editor } from '@teppan/core';
+import { EditorState, EditorView } from '@teppan/view';
 
-const editor = new Editor(
-  { initialContent: 'Hello', language: 'plaintext' },
-  { onChange: (content) => console.log(content) }
-);
+const state = EditorState.create({
+  doc: 'Hello World',
+  extensions: [],
+});
 
-editor.insertText(' World');
-console.log(editor.getContent()); // "Hello World"
+const view = new EditorView({
+  state,
+  parent: document.getElementById('editor')!,
+});
 ```
 
 ## Architecture
@@ -112,26 +127,37 @@ console.log(editor.getContent()); // "Hello World"
 ```
 teppan/
 ├── packages/
-│   ├── core/           # Headless core
+│   ├── wasm-core/         # Rust/WASM core (Piece Table, text ops)
 │   │   └── src/
-│   │       ├── editor.ts
-│   │       ├── types.ts
-│   │       └── index.ts
-│   ├── react/          # React bindings
+│   │       └── lib.rs
+│   ├── state/             # State management
 │   │   └── src/
-│   │       ├── CodeEditor.tsx
-│   │       ├── useEditor.ts
 │   │       └── index.ts
-│   ├── vue/            # Vue 3 bindings
+│   ├── view/              # DOM rendering
 │   │   └── src/
-│   │       ├── CodeEditor.vue
-│   │       ├── useEditor.ts
 │   │       └── index.ts
-│   └── svelte/         # Svelte 5 bindings
-│       └── src/
-│           ├── CodeEditor.svelte
-│           ├── createEditor.svelte.ts
-│           └── index.ts
+│   ├── theme/             # Theme system
+│   │   └── src/
+│   │       └── index.ts
+│   ├── highlight/         # Syntax highlighting
+│   │   └── src/
+│   │       └── index.ts
+│   └── bindings/          # Framework bindings
+│       ├── react/
+│       │   └── src/
+│       │       ├── CodeEditor.tsx
+│       │       ├── useEditor.ts
+│       │       └── index.ts
+│       ├── vue/
+│       │   └── src/
+│       │       ├── CodeEditor.vue
+│       │       ├── useEditor.ts
+│       │       └── index.ts
+│       └── svelte/
+│           └── src/
+│               ├── CodeEditor.svelte
+│               ├── createEditor.svelte.ts
+│               └── index.ts
 ├── package.json
 ├── tsconfig.json
 └── biome.json
