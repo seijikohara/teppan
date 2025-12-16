@@ -12,7 +12,7 @@
   "keywords": ["code-editor", "editor", "headless", "typescript"],
   "workspaces": ["packages/*", "packages/bindings/*", "examples/*"],
   "scripts": {
-    "build": "bun run --filter '*' build",
+    "build": "bun run --filter '@teppan/state' build && bun run --filter '@teppan/theme' build && bun run --filter '@teppan/wasm-core' build && bun run --filter '@teppan/view' build && bun run --filter '@teppan/highlight' build && bun run --filter '@teppan/react' build && bun run --filter '@teppan/vue' build && bun run --filter '@teppan/svelte' build && bun run --filter '@teppan/example-*' build",
     "dev": "bun run --filter '*' dev",
     "test": "bun run --filter '*' test",
     "lint": "bun run --filter '*' lint",
