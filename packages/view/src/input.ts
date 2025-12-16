@@ -138,6 +138,9 @@ export class InputHandler {
   private handleKeyDown(event: KeyboardEvent): void {
     if (this.composing) return;
 
+    // Ignore events from search panel or other inputs
+    if (this.isEventFromOverlay(event)) return;
+
     const state = this.getState();
     const normalizedKey = normalizeKeyEvent(event);
 
@@ -179,6 +182,9 @@ export class InputHandler {
 
   private handleBeforeInput(event: InputEvent): void {
     if (this.composing) return;
+
+    // Ignore events from search panel or other inputs
+    if (this.isEventFromOverlay(event)) return;
 
     const inputType = event.inputType;
 
@@ -285,6 +291,23 @@ export class InputHandler {
         this.dispatch(transaction);
       }
     }
+  }
+
+  /**
+   * Check if an event originated from an overlay element (like search panel)
+   * These events should not be processed by the editor
+   */
+  private isEventFromOverlay(event: Event): boolean {
+    const target = event.target as HTMLElement;
+    if (!target) return false;
+
+    // Check if the event target is inside a search panel or other overlay
+    return (
+      target.closest(".teppan-search-panel") !== null ||
+      target.tagName === "INPUT" ||
+      target.tagName === "TEXTAREA" ||
+      target.tagName === "SELECT"
+    );
   }
 
   /**

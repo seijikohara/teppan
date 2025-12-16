@@ -43,6 +43,16 @@ export {
   createEditorDOM,
 } from "./dom";
 
+// Search panel
+export {
+  SearchPanel,
+  SearchCSS,
+  type SearchPanelConfig,
+  type SearchPanelState,
+  createSearchPanelState,
+  getSearchPanelStyles,
+} from "./search-panel";
+
 // Re-export commonly used types from @teppan/state for convenience
 export {
   EditorState,

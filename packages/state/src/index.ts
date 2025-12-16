@@ -31,3 +31,20 @@ export {
   rangeContains,
   rangesOverlap,
 } from "./position";
+export {
+  type SearchQuery,
+  type SearchMatch,
+  type SearchState,
+  search,
+  searchStateField,
+  getSearchState,
+  setSearchQuery,
+  selectMatch,
+  clearSearch,
+  searchInDocument,
+  replaceMatch,
+  replaceAllMatches,
+  findMatches,
+  findNearestMatch,
+  buildSearchRegex,
+} from "./search";
