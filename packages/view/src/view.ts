@@ -16,7 +16,8 @@ import {
   measureCharSize,
   setStyles,
 } from "./dom";
-import { InputHandler, defaultKeymap } from "./input";
+import { IS_MAC, InputHandler, defaultKeymap } from "./input";
+import { SearchPanel, type SearchPanelConfig } from "./search-panel";
 import { ViewportManager, getVisibleLines } from "./viewport";
 
 /**
@@ -33,6 +34,8 @@ export interface EditorViewConfig extends EditorStateConfig {
   lineNumbers?: boolean;
   /** Tab size (number of spaces) */
   tabSize?: number;
+  /** Search panel configuration */
+  search?: SearchPanelConfig | boolean;
 }
 
 /**
@@ -56,7 +59,11 @@ export class EditorView {
   /** Whether the editor is focused */
   private _hasFocus = false;
   /** Configuration */
-  private config: Required<Omit<EditorViewConfig, keyof EditorStateConfig>>;
+  private config: Required<
+    Omit<EditorViewConfig, keyof EditorStateConfig | "search">
+  > & {
+    search: SearchPanelConfig | boolean;
+  };
   /** Character size cache */
   private charSize: { width: number; height: number } = {
     width: 8,
@@ -66,6 +73,8 @@ export class EditorView {
   private lineElements: Map<number, HTMLElement> = new Map();
   /** Current decorations */
   private decorations: DecorationSet = DecorationSet.empty();
+  /** Search panel */
+  private searchPanel: SearchPanel | null = null;
 
   constructor(config: EditorViewConfig = {}) {
     // Initialize configuration
@@ -75,6 +84,7 @@ export class EditorView {
       placeholder: config.placeholder ?? "",
       lineNumbers: config.lineNumbers ?? true,
       tabSize: config.tabSize ?? 2,
+      search: config.search ?? true,
     };
 
     // Add default keymap if not provided
@@ -141,6 +151,19 @@ export class EditorView {
     // Set up event listeners
     this.setupEventListeners();
 
+    // Initialize search panel if enabled
+    if (this.config.search !== false) {
+      const searchConfig =
+        typeof this.config.search === "object" ? this.config.search : {};
+      this.searchPanel = new SearchPanel(
+        this.dom,
+        () => this._state,
+        (tr) => this.dispatch(tr),
+        searchConfig,
+      );
+      this.searchPanel.setOnClose(() => this.focus());
+    }
+
     // Initial render
     this.render();
   }
@@ -195,14 +218,59 @@ export class EditorView {
   }
 
   /**
+   * Open the search panel
+   */
+  openSearch(options?: { showReplace?: boolean }): void {
+    this.searchPanel?.open(options);
+  }
+
+  /**
+   * Close the search panel
+   */
+  closeSearch(): void {
+    this.searchPanel?.close();
+  }
+
+  /**
+   * Toggle the search panel
+   */
+  toggleSearch(options?: { showReplace?: boolean }): void {
+    this.searchPanel?.toggle(options);
+  }
+
+  /**
+   * Find the next match
+   */
+  findNext(): void {
+    this.searchPanel?.findNext();
+  }
+
+  /**
+   * Find the previous match
+   */
+  findPrevious(): void {
+    this.searchPanel?.findPrevious();
+  }
+
+  /**
+   * Get the search panel instance
+   */
+  getSearchPanel(): SearchPanel | null {
+    return this.searchPanel;
+  }
+
+  /**
    * Destroy the editor and clean up
    */
   destroy(): void {
     this.inputHandler.detach();
     this.dom.removeEventListener("focus", this.handleFocus);
     this.dom.removeEventListener("blur", this.handleBlur);
+    this.dom.removeEventListener("keydown", this.handleSearchKeyDown);
     this.scrollerDOM.removeEventListener("scroll", this.handleScroll);
     this.contentDOM.removeEventListener("mousedown", this.handleMouseDown);
+
+    this.searchPanel?.destroy();
 
     if (this.dom.parentElement) {
       this.dom.parentElement.removeChild(this.dom);
@@ -225,6 +293,7 @@ export class EditorView {
 
     this.dom.addEventListener("focus", this.handleFocus);
     this.dom.addEventListener("blur", this.handleBlur);
+    this.dom.addEventListener("keydown", this.handleSearchKeyDown);
     this.scrollerDOM.addEventListener("scroll", this.handleScroll);
     this.contentDOM.addEventListener("mousedown", this.handleMouseDown);
 
@@ -247,6 +316,63 @@ export class EditorView {
     this._hasFocus = false;
     this.dom.classList.remove(CSS.focused);
     this.renderCursor();
+  };
+
+  private handleSearchKeyDown = (event: KeyboardEvent): void => {
+    if (!this.searchPanel) return;
+
+    const key = event.key.toLowerCase();
+    const modKey = IS_MAC ? event.metaKey : event.ctrlKey;
+
+    // Cmd/Ctrl+F: Open find panel
+    if (modKey && key === "f" && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.searchPanel.open({ showReplace: false });
+      return;
+    }
+
+    // Cmd/Ctrl+H: Open find and replace panel
+    if (modKey && key === "h" && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.searchPanel.open({ showReplace: true });
+      return;
+    }
+
+    // F3 or Cmd/Ctrl+G: Find next
+    if (
+      (key === "f3" && !modKey) ||
+      (modKey && key === "g" && !event.shiftKey)
+    ) {
+      if (this.searchPanel.isOpen()) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.searchPanel.findNext();
+      }
+      return;
+    }
+
+    // Shift+F3 or Cmd/Ctrl+Shift+G: Find previous
+    if (
+      (key === "f3" && event.shiftKey && !modKey) ||
+      (modKey && key === "g" && event.shiftKey)
+    ) {
+      if (this.searchPanel.isOpen()) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.searchPanel.findPrevious();
+      }
+      return;
+    }
+
+    // Escape: Close search panel
+    if (key === "escape" && this.searchPanel.isOpen()) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.searchPanel.close();
+      return;
+    }
   };
 
   private handleScroll = (): void => {
