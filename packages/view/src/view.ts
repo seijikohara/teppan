@@ -5,6 +5,7 @@ import {
   SelectionSet,
   type Transaction,
   createPosition,
+  jumpToMatchingBracket,
 } from "@teppan/state";
 import { DecorationSet, collectDecorations } from "./decoration";
 import {
@@ -319,10 +320,21 @@ export class EditorView {
   };
 
   private handleSearchKeyDown = (event: KeyboardEvent): void => {
-    if (!this.searchPanel) return;
-
     const key = event.key.toLowerCase();
     const modKey = IS_MAC ? event.metaKey : event.ctrlKey;
+
+    // Cmd/Ctrl+Shift+\: Jump to matching bracket
+    if (modKey && event.shiftKey && key === "\\") {
+      event.preventDefault();
+      event.stopPropagation();
+      const transaction = jumpToMatchingBracket(this._state);
+      if (transaction) {
+        this.dispatch(transaction);
+      }
+      return;
+    }
+
+    if (!this.searchPanel) return;
 
     // Cmd/Ctrl+F: Open find panel
     if (modKey && key === "f" && !event.shiftKey && !event.altKey) {

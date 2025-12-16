@@ -156,10 +156,18 @@ export const baseStyles = `
 }
 
 /* Matching bracket highlight */
-.teppan-matching-bracket {
+.teppan-matching-bracket,
+.teppan-bracket-match {
   background: var(--teppan-matching-bracket, rgba(59, 80, 112, 0.6));
   border-radius: 3px;
   outline: 1px solid rgba(88, 166, 255, 0.4);
+}
+
+/* Unmatched bracket highlight */
+.teppan-bracket-unmatched {
+  background: var(--teppan-unmatched-bracket, rgba(248, 81, 73, 0.3));
+  border-radius: 3px;
+  outline: 1px solid rgba(248, 81, 73, 0.6);
 }
 
 /* Token styles with smooth color transitions */
