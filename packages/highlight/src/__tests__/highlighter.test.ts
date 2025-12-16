@@ -1,11 +1,11 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
+import type { EditorState } from "@teppan/state";
 import {
   Highlighter,
-  createHighlighterExtension,
   type HighlighterConfig,
+  createHighlighterExtension,
 } from "../highlighter";
 import type { Language } from "../language";
-import type { EditorState, Decoration } from "@teppan/state";
 
 // Mock EditorState
 function createMockState(doc: string): EditorState {
@@ -22,7 +22,8 @@ function createMockState(doc: string): EditorState {
     doc,
     length: doc.length,
     lineCount: lines.length,
-    line: (n: number) => (n >= 0 && n < lineInfos.length ? lineInfos[n] : undefined),
+    line: (n: number) =>
+      n >= 0 && n < lineInfos.length ? lineInfos[n] : undefined,
     sliceDoc: (from: number, to?: number) => doc.slice(from, to),
   } as unknown as EditorState;
 }
@@ -262,7 +263,7 @@ describe("Highlighter", () => {
 
       const decorations = highlighter.tokensToDecorations(tokens);
       expect(decorations[0].class).toBe(
-        "teppan-token-variable teppan-token-definition"
+        "teppan-token-variable teppan-token-definition",
       );
     });
   });
@@ -298,7 +299,7 @@ describe("Highlighter", () => {
 
       // Should have keyword tokens from all three lines
       const keywordDecorations = decorations.filter((d) =>
-        d.class?.includes("keyword")
+        d.class?.includes("keyword"),
       );
       expect(keywordDecorations.length).toBe(3);
     });

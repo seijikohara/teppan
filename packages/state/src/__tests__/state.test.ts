@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { EditorState } from "../state";
-import { SelectionSet } from "../selection";
 import { createPosition } from "../position";
+import { SelectionSet } from "../selection";
+import { EditorState } from "../state";
 
 describe("EditorState", () => {
   describe("create", () => {

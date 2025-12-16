@@ -1,12 +1,12 @@
-import { describe, expect, test, beforeEach } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 import {
+  type Language,
   LanguageRegistry,
+  getLanguage,
   globalLanguageRegistry,
   registerLanguage,
-  getLanguage,
   tokenize,
   tokenizeLine,
-  type Language,
 } from "../language";
 
 // Test language definition
@@ -240,12 +240,8 @@ describe("tokenize", () => {
   test("preserves token positions", () => {
     const tokens = tokenize("abc def", testLanguage);
     // "abc" at 0-3, space at 3-4, "def" at 4-7
-    const abcToken = tokens.find(
-      (t) => t.type === "variable" && t.from === 0
-    );
-    const defToken = tokens.find(
-      (t) => t.type === "variable" && t.from === 4
-    );
+    const abcToken = tokens.find((t) => t.type === "variable" && t.from === 0);
+    const defToken = tokens.find((t) => t.type === "variable" && t.from === 4);
 
     expect(abcToken).toBeDefined();
     expect(abcToken?.to).toBe(3);
@@ -313,9 +309,7 @@ describe("tokenizeLine", () => {
   test("adjusts multiple token positions", () => {
     const tokens = tokenizeLine("if x", 20, testLanguage);
     const ifToken = tokens.find((t) => t.type === "keyword");
-    const xToken = tokens.find(
-      (t) => t.type === "variable" && t.from >= 20
-    );
+    const xToken = tokens.find((t) => t.type === "variable" && t.from >= 20);
 
     expect(ifToken?.from).toBe(20);
     expect(ifToken?.to).toBe(22);

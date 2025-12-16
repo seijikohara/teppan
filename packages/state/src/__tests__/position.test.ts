@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import {
-  createPosition,
   comparePositions,
-  positionsEqual,
+  createPosition,
   createRange,
   isRangeEmpty,
+  positionsEqual,
   rangeContains,
   rangesOverlap,
 } from "../position";

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { tokenClassName, createToken, type Token } from "../tokens";
+import { type Token, createToken, tokenClassName } from "../tokens";
 
 describe("tokens", () => {
   describe("createToken", () => {
@@ -34,7 +34,7 @@ describe("tokens", () => {
         modifiers: ["definition"],
       };
       expect(tokenClassName(token)).toBe(
-        "teppan-token-variable teppan-token-definition"
+        "teppan-token-variable teppan-token-definition",
       );
     });
 
@@ -46,7 +46,7 @@ describe("tokens", () => {
         modifiers: ["async", "declaration"],
       };
       expect(tokenClassName(token)).toBe(
-        "teppan-token-function teppan-token-async teppan-token-declaration"
+        "teppan-token-function teppan-token-async teppan-token-declaration",
       );
     });
 

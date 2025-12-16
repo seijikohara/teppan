@@ -176,7 +176,7 @@ describe("ChangeSet", () => {
     test("calculates new length with multiple changes", () => {
       const cs = new ChangeSet(
         [Change.insert(0, "ab"), Change.delete(5, 8)],
-        10
+        10,
       );
       expect(cs.newLength).toBe(10 + 2 - 3); // 9
     });
@@ -272,7 +272,7 @@ describe("ChangeSet", () => {
       const originalDoc = "hello world";
       const cs = ChangeSet.of(
         Change.replace(6, 11, "there"),
-        originalDoc.length
+        originalDoc.length,
       );
       const inverted = cs.invert(originalDoc);
 

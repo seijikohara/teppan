@@ -1,5 +1,5 @@
-import { CodeEditor } from "@teppan/react";
 import { createHighlighterExtension, typescript } from "@teppan/highlight";
+import { CodeEditor } from "@teppan/react";
 import { useState } from "react";
 
 // Create syntax highlighting extension for TypeScript
@@ -63,7 +63,8 @@ type Status = "idle" | "loading" | "error";
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)",
+    background:
+      "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)",
     padding: "40px 20px",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif',
