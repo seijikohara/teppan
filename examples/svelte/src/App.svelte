@@ -1,9 +1,13 @@
 <script lang="ts">
   import { CodeEditor } from "@teppan/svelte";
   import { createHighlighterExtension, typescript } from "@teppan/highlight";
+  import { bracketMatching } from "@teppan/state";
 
   // Create syntax highlighting extension for TypeScript
   const highlighter = createHighlighterExtension({ language: typescript });
+
+  // Create bracket matching extension
+  const brackets = bracketMatching();
 
   // Sample code showcasing all supported syntax highlighting tokens
   let code = $state(`// Comment: This is a line comment
@@ -73,7 +77,7 @@ type Status = "idle" | "loading" | "error";
 
     <div class="editor-wrapper">
       <div class="editor-container">
-        <CodeEditor bind:value={code} extensions={[highlighter]} />
+        <CodeEditor bind:value={code} extensions={[highlighter, brackets]} />
       </div>
     </div>
 

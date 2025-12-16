@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@teppan/vue": "workspace:*",
+    "@teppan/state": "workspace:*",
     "@teppan/view": "workspace:*",
     "@teppan/theme": "workspace:*",
     "@teppan/highlight": "workspace:*",

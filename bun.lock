@@ -15,6 +15,7 @@
       "dependencies": {
         "@teppan/highlight": "workspace:*",
         "@teppan/react": "workspace:*",
+        "@teppan/state": "workspace:*",
         "@teppan/theme": "workspace:*",
         "@teppan/view": "workspace:*",
         "react": "^19.0.0",
@@ -33,6 +34,7 @@
       "version": "0.0.1",
       "dependencies": {
         "@teppan/highlight": "workspace:*",
+        "@teppan/state": "workspace:*",
         "@teppan/svelte": "workspace:*",
         "@teppan/theme": "workspace:*",
         "@teppan/view": "workspace:*",
@@ -50,6 +52,7 @@
       "version": "0.0.1",
       "dependencies": {
         "@teppan/highlight": "workspace:*",
+        "@teppan/state": "workspace:*",
         "@teppan/theme": "workspace:*",
         "@teppan/view": "workspace:*",
         "@teppan/vue": "workspace:*",

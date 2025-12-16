@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@teppan/svelte": "workspace:*",
+    "@teppan/state": "workspace:*",
     "@teppan/view": "workspace:*",
     "@teppan/theme": "workspace:*",
     "@teppan/highlight": "workspace:*"
