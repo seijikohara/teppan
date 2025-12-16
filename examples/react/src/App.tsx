@@ -1,9 +1,13 @@
 import { createHighlighterExtension, typescript } from "@teppan/highlight";
 import { CodeEditor } from "@teppan/react";
+import { bracketMatching } from "@teppan/state";
 import { useState } from "react";
 
 // Create syntax highlighting extension for TypeScript
 const highlighter = createHighlighterExtension({ language: typescript });
+
+// Create bracket matching extension
+const brackets = bracketMatching();
 
 // Sample code showcasing all supported syntax highlighting tokens
 const initialCode = `// Comment: This is a line comment
@@ -160,7 +164,7 @@ function App() {
             <CodeEditor
               initialContent={code}
               onChange={setCode}
-              extensions={[highlighter]}
+              extensions={[highlighter, brackets]}
             />
           </div>
         </div>

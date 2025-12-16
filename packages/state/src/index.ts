@@ -48,3 +48,18 @@ export {
   findNearestMatch,
   buildSearchRegex,
 } from "./search";
+export {
+  type BracketPair,
+  type BracketMatch,
+  type BracketState,
+  DEFAULT_BRACKET_PAIRS,
+  bracketMatching,
+  bracketStateField,
+  getBracketState,
+  findMatchingBracket,
+  findBracketAtCursor,
+  jumpToMatchingBracket,
+  isOpeningBracket,
+  isClosingBracket,
+  isInsideStringOrComment,
+} from "./bracket";

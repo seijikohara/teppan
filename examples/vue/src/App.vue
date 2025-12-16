@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { CodeEditor } from "@teppan/vue";
 import { createHighlighterExtension, typescript } from "@teppan/highlight";
+import { bracketMatching } from "@teppan/state";
 import { ref } from "vue";
 
 // Create syntax highlighting extension for TypeScript
 const highlighter = createHighlighterExtension({ language: typescript });
+
+// Create bracket matching extension
+const brackets = bracketMatching();
 
 // Sample code showcasing all supported syntax highlighting tokens
 const code = ref(`// Comment: This is a line comment
@@ -75,7 +79,7 @@ const showContent = ref(false);
 
       <div class="editor-wrapper">
         <div class="editor-container">
-          <CodeEditor v-model="code" :extensions="[highlighter]" />
+          <CodeEditor v-model="code" :extensions="[highlighter, brackets]" />
         </div>
       </div>
 

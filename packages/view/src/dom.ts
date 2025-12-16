@@ -19,6 +19,8 @@ export const CSS = {
   cursorLayer: "teppan-cursor-layer",
   focused: "teppan-focused",
   readonly: "teppan-readonly",
+  bracketMatch: "teppan-bracket-match",
+  bracketUnmatched: "teppan-bracket-unmatched",
 } as const;
 
 /**
